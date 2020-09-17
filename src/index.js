@@ -10,8 +10,19 @@ type User {
   username: String!
 }
 
+type Error {
+  field: String!
+  message: String!
+}
+
+type RegisterResponse {
+  errors: [Error]
+  user: User!
+
+}
+
 type Mutation {
- register: User
+ register: RegisterResponse!
 }
 `;
 
@@ -23,8 +34,14 @@ const resolvers = {
   // type CRUD
   Mutation: {
     register: () => ({
-      id: 1,
-      username: "bob"
+      errors: [{
+        field: 'username',
+        message: 'bad'
+      }],
+      user: {
+        id: 1,
+        username: "bob"
+      }
     })
   }
 }
